@@ -30,7 +30,7 @@ my &index = &page.assuming( #:REFRESH(5),
     |),
 );
 
-#my @tools = [Analytics.new: :provider(Umami), :key<35777f61-5123-4bb8-afb1-aced487af36e>,];
+my @tools = [Analytics.new: :provider(Umami), :key<35777f61-5123-4bb8-afb1-aced487af36e>,];
 
 sub SITE is export {
 

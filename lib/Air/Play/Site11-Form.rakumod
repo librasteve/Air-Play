@@ -1,6 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
 use Air::Component;
+use Air::Farm;
 
 my &index = &page.assuming( #:REFRESH(5),
     title       => 'hÅrc',
@@ -8,35 +9,74 @@ my &index = &page.assuming( #:REFRESH(5),
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-class Counter does Component does Tag {
-    has Int $.value = 0;
 
-    method increment is controller {
-        $!value++;
-        respond self
-    }
+use Cro::WebApp::Form;
 
-    method hx-increment(--> Hash()) {
-        :hx-get("$.url-id/increment"),
-        :hx-target("#$.id"),
-        :hx-swap<outerHTML>,
-        :hx-trigger<submit>,
-    }
+#| https://cro.raku.org/docs/reference/cro-webapp-form
+class Contact does Cro::WebApp::Form is Farm {
+    has Str    $.name;   #is required;
+    has Str    $.street;
+    has Str    $.city;
+    has Str    $.state;
+    has Str    $.zip      is validated(/^<[A..Za..z0..9\s]>+$/, 'Only alphanumerics are allowed');
+    has Str    $.country  is placeholder('USA');
 
-    multi method HTML {
-        input :$.id, :$.name, :$!value
+    has Bool   $.is-company;
+    has Str    $.company;
+    has Str    $.url      is url;
+
+    has Str    $.phone    is tel;
+    has Str    $.email    is email;
+    has Str    $.password is password;
+
+    has Int    $.rating   will select { 1..5 };
+    has Str    $.comment  is multiline(:5rows, :60cols) is maxlength(1000);
+    has        $.date     is date;
+
+    has Int    $.hidden   is hidden;
+
+    method validate-form {
+        if $!is-company && ! $!company {
+            self.add-validation-error("Please provide name of company");
+        }
+        if $!company && ! $!is-company {
+            self.add-validation-error("Please check the Is company box");
+        }
     }
 }
 
-my Counter $counter .= new;
+my $contact = Contact.empty;
+
+note $contact.HTML;
 
 sub SITE is export {
-    site :components[$counter], #:theme-color<red>,
+    site #:components[$contact], #:theme-color<red>,
         index
             main
-                form |$counter.hx-increment, [
-                    h3 'Counter:';
-                    $counter;
-                    button :type<submit>, '+';
-                ]
+                $contact
 }
+
+sub routes is export {
+    SITE.routes
+}
+
+
+#class Counter does Component does Tag {
+#    has Int $.value = 0;
+#
+#    method increment is controller {
+#        $!value++;
+#        respond self
+#    }
+#
+#    method hx-increment(--> Hash()) {
+#        :hx-get("$.url-id/increment"),
+#        :hx-target("#$.id"),
+#        :hx-swap<outerHTML>,
+#        :hx-trigger<submit>,
+#    }
+#
+#    multi method HTML {
+#        input :$.id, :$.name, :$!value
+#    }
+#}

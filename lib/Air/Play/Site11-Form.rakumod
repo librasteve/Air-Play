@@ -2,6 +2,7 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Component;
 use Air::Farm;
+use Cro::WebApp::Form;
 
 my &index = &page.assuming( #:REFRESH(5),
     title       => 'hÅrc',
@@ -9,12 +10,9 @@ my &index = &page.assuming( #:REFRESH(5),
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-
-use Cro::WebApp::Form;
-
 #| https://cro.raku.org/docs/reference/cro-webapp-form
-class Contact does Cro::WebApp::Form is Farm {
-    has Str    $.name;   #is required;
+class Contact does Farm {
+    has Str    $.name is required;
     has Str    $.street;
     has Str    $.city;
     has Str    $.state;
@@ -26,7 +24,7 @@ class Contact does Cro::WebApp::Form is Farm {
     has Str    $.url      is url;
 
     has Str    $.phone    is tel;
-    has Str    $.email    is email;
+    has Str    $.email    is email is required;
     has Str    $.password is password;
 
     has Int    $.rating   will select { 1..5 };
@@ -43,17 +41,40 @@ class Contact does Cro::WebApp::Form is Farm {
             self.add-validation-error("Please check the Is company box");
         }
     }
+
+    method doit is action {
+        note 43;
+        {
+            note 44;
+#            my $formtmp = Q|<&form(.form)>|;
+#
+#            form-data -> Contact $form {
+#                if $form.is-valid {
+#                    note "Got form data: $form.raku()";
+#                    content 'text/plain', 'Thanks for your review!';
+#                }
+#                else {
+#                    template-inline $formtmp, { :$form }
+#                }
+#            }
+        }
+    }
 }
 
 my $contact = Contact.empty;
+#my $contact = Contact.new;
 
-note $contact.HTML;
+#note $contact.HTML-RENDER-DATA;
+#note $contact.GENERATE-NAME;
+
 
 sub SITE is export {
-    site #:components[$contact], #:theme-color<red>,
+    site :components[$contact], #:theme-color<red>,
         index
-            main
-                $contact
+            main [
+                h2 'Contact Form';
+                $contact;
+            ]
 }
 
 sub routes is export {

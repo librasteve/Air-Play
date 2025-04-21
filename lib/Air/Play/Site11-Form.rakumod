@@ -42,31 +42,28 @@ class Contact does Farm {
         }
     }
 
-    method doit is action {
-        note 43;
-        {
-            note 44;
-#            my $formtmp = Q|<&form(.form)>|;
-#
-#            form-data -> Contact $form {
-#                if $form.is-valid {
-#                    note "Got form data: $form.raku()";
-#                    content 'text/plain', 'Thanks for your review!';
-#                }
-#                else {
-#                    template-inline $formtmp, { :$form }
-#                }
-#            }
+    method form-routes {
+        use Cro::WebApp::Template;
+        use Cro::HTTP::Router;
+
+        my $formtmp = Q|<&form(.form)>|;
+
+        post -> {
+            form-data -> Contact $form {
+                if $form.is-valid {
+                    note "Got form data: $form.raku()";
+                    content 'text/plain', 'Thanks for your review!';
+                }
+                else {
+                    template-inline $formtmp, { :$form }   #iamerejh ...fragment!
+                }
+            }
         }
     }
+
 }
 
 my $contact = Contact.empty;
-#my $contact = Contact.new;
-
-#note $contact.HTML-RENDER-DATA;
-#note $contact.GENERATE-NAME;
-
 
 sub SITE is export {
     site :components[$contact], #:theme-color<red>,

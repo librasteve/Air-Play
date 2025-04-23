@@ -9,9 +9,9 @@ unit class Air::Play;
 #use Air::Play::Site06-Semantic;
 #use Air::Play::Site07-BaseExamples;
 #use Air::Play::Site08-SearchTable;
-use Air::Play::Site09-Todos;
+#use Air::Play::Site09-Todos;
 #use Air::Play::Site10-Counter;
-#use Air::Play::Site11-Form;
+use Air::Play::Site11-Form;
 
 sub routes is export {
     SITE.routes

@@ -1,6 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Farm;
+use Air::Form;
 
 use Cro::WebApp::Form;
 
@@ -11,7 +11,7 @@ my &index = &page.assuming( #:REFRESH(5),
 );
 
 #| https://cro.raku.org/docs/reference/cro-webapp-form
-class Contact does Farm {
+class Contact does Form {
     has Str    $.name     is required;
     has Str    $.street;
     has Str    $.city;
@@ -45,7 +45,7 @@ class Contact does Farm {
     method form-routes {
         use Cro::HTTP::Router;
 
-        post -> {
+        post -> Str $ where self.form-url, {
             form-data -> Contact $form {
                 if $form.is-valid {
                     note "Got form data: $form.form-data()";
@@ -57,7 +57,6 @@ class Contact does Farm {
             }
         }
     }
-
 }
 
 my $contact = Contact.empty;

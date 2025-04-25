@@ -10,25 +10,26 @@ my &index = &page.assuming( #:REFRESH(5),
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
+
 #| https://cro.raku.org/docs/reference/cro-webapp-form
 class Contact does Form {
-    has Str    $.name     is required;
-    has Str    $.street;
-    has Str    $.city;
-    has Str    $.state;
-    has Str    $.zip      is validated(/^<[A..Za..z0..9\s]>+$/, 'Only alphanumerics are allowed');
-    has Str    $.country  is placeholder('USA');
+    has Str    $.name     is validated(va-text)  is required;
+    has Str    $.street   is validated(va-text);
+    has Str    $.city     is validated(va-text);
+    has Str    $.state    is validated(va-text);
+    has Str    $.zip      is validated(va-postcode);
+    has Str    $.country  is validated(va-words) is placeholder('USA');
 
     has Bool   $.is-company;
-    has Str    $.company;
-    has Str    $.url      is url;
+    has Str    $.company  is validated(va-text);
+    has Str    $.url      is validated(va-url)   is url ;
 
-    has Str    $.phone    is tel;
-    has Str    $.email    is email is required;
+    has Str    $.phone    is validated(va-tel)   is tel;
+    has Str    $.email    is validated(va-email) is email is required;
     has Str    $.password is password;
 
     has Int    $.rating   will select { 1..5 };
-    has Str    $.comment  is multiline(:5rows, :60cols) is maxlength(1000);
+    has Str    $.comment  is validated(va-note)  is multiline(:5rows, :60cols) is maxlength(1000);
     has        $.date     is date;
 
     has Int    $.hidden   is hidden;

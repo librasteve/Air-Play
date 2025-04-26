@@ -41,8 +41,8 @@ class Contact does Form {
             self.add-validation-error("Please check the Is company box");
         }
         given $!date {
-            when '' {$!date = Date.new: now}
-            default {$!date = Date.new: $!date}
+            when '' { $!date = Date.new: now    }
+            default { $!date = Date.new: $!date }
         }
     }
 

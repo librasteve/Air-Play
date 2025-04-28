@@ -22,7 +22,6 @@ class Contact does Form {
     has Bool   $.is-company;
     has Str    $.company  is validated(%va<text>);
     has Str    $.url      is validated(%va<url>)   is url ;
-
     has Str    $.phone    is validated(%va<tel>)   is tel;
     has Str    $.email    is validated(%va<email>) is email is required;
     has Str    $.password is validated(%va<password>) is password;
@@ -33,9 +32,14 @@ class Contact does Form {
     has        $.date     is date;
     has Str    $.hidden   is hidden;
 
+    method do-form-attrs{
+        self.do-form-defaults;
+        self.form-attrs: {:submit-button-text('Save Contact Info')};
+    }
+
     method validate-form {
         if $!is-company && ! $!company {
-            self.add-validation-error("Please provide name of company");
+            self.add-validation-error("Please fill in the Company field");
         }
         if $!company && ! $!is-company {
             self.add-validation-error("Please check the Is company box");
@@ -46,8 +50,12 @@ class Contact does Form {
         }
     }
 
+    # todo consider custom form-data (or otherwise get type)
+    # https://github.com/librasteve/cro-webapp/blob/ee8f9bc15b92e3c9964f4b84bd616ce9793147ea/lib/Cro/WebApp/Form.rakumod#L798
     method form-routes {
         use Cro::HTTP::Router;
+
+        self.do-form-prep;
 
         post -> Str $ where self.form-url, {
             form-data -> Contact $form {

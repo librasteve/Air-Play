@@ -29,11 +29,11 @@ class Contact does Form {
     has Int    $.rating   will select { 1..5 };
     has Str    $.comment  is validated(%va<notes>)
                               is multiline(:5rows, :60cols) is maxlength(1000);
-    has        $.date     is date;
+    has        $.date     is date
+                              is help("Leave blank for today's date");
     has Str    $.hidden   is hidden;
 
     method do-form-attrs{
-        self.do-form-defaults;
         self.form-attrs: {:submit-button-text('Save Contact Info')};
     }
 
@@ -50,12 +50,10 @@ class Contact does Form {
         }
     }
 
-    # todo consider custom form-data (or otherwise get type)
-    # https://github.com/librasteve/cro-webapp/blob/ee8f9bc15b92e3c9964f4b84bd616ce9793147ea/lib/Cro/WebApp/Form.rakumod#L798
     method form-routes {
         use Cro::HTTP::Router;
 
-        self.do-form-prep;
+        self.prep;
 
         post -> Str $ where self.form-url, {
             form-data -> Contact $form {

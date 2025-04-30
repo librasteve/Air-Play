@@ -24,7 +24,8 @@
         "Air::Play::Site08-SearchTable": "lib/Air/Play/Site08-SearchTable.rakumod",
         "Air::Play::Site09-Todos": "lib/Air/Play/Site09-Todos.rakumod",
         "Air::Play::Site10-Counter": "lib/Air/Play/Site10-Counter.rakumod",
-        "Air::Play::Site11-Form": "lib/Air/Play/Site11-Form.rakumod"
+        "Air::Play::Site11-Form": "lib/Air/Play/Site11-Form.rakumod",
+        "Air::Play::Site12-FormShort": "lib/Air/Play/Site11-FormShort.rakumod"
     },
     "license": "Artistic-2.0",
     "source-url": "https://github.com/librasteve/Air-Play.git"

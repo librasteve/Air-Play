@@ -47,7 +47,7 @@ install sass (in the static/css dir)
     - in styles.css, `@use "node_modules/@picocss/pico/scss";`
     - `sass styles.scss styles.css`  [target is then styles.scss/styles]
     - `--load-path=node_modules/@picocss/pico/scss/`
-      from https://picocss.org
+      from https://picocss.com
 - some tweaks to root styles (mainly to reduce scale) from [here](https://github.com/picocss/pico/discussions/482)
 
 ## Deployment

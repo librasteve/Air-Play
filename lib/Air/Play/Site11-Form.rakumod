@@ -51,19 +51,15 @@ class Contact does Form {
     }
 
     method form-routes {
-        use Cro::HTTP::Router;
+        self.init;
 
-        self.prep;
-
-        post -> Str $ where self.form-url, {
-            form-data -> Contact $form {
-                if $form.is-valid {
-                    note "Got form data: $form.form-data()";
-                    content 'text/plain', 'Contact info received!'
-                }
-                else {
-                    self.retry: $form
-                }
+        self.controller: -> Contact $form {
+            if $form.is-valid {
+                note "Got form data: $form.form-data()";
+                self.finish: 'Contact info received!'
+            }
+            else {
+                self.retry: $form
             }
         }
     }

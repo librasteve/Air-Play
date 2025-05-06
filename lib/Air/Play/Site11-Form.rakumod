@@ -2,15 +2,12 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Form;
 
-use Cro::WebApp::Form;
-
 my &index = &page.assuming( #:REFRESH(5),
     title       => 'hÅrc',
     description => 'HTMX, Air, Red, Cro',
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-#| https://cro.raku.org/docs/reference/cro-webapp-form
 class Contact does Form {
     has Str    $.name     is validated(%va<text>)  is required;
     has Str    $.street   is validated(%va<text>);
@@ -28,21 +25,21 @@ class Contact does Form {
 
     has Int    $.rating   will select { 1..5 };
     has Str    $.comment  is validated(%va<notes>)
-                              is multiline(:5rows, :60cols) is maxlength(1000);
+                              is multiline(:5rows, :60cols) is maxlength(400);
     has        $.date     is date
                               is help("Leave blank for today's date");
     has Str    $.hidden   is hidden;
 
     method do-form-attrs{
-        self.form-attrs: {:submit-button-text('Save Contact Info')};
+        self.form-attrs: {:submit-button-text('Save Contact Info')}
     }
 
     method validate-form {
         if $!is-company && ! $!company {
-            self.add-validation-error("Please fill in the Company field");
+            self.add-validation-error("Please fill in the Company field")
         }
         if $!company && ! $!is-company {
-            self.add-validation-error("Please check the Is company box");
+            self.add-validation-error("Please check the Is company box")
         }
         given $!date {
             when '' { $!date = Date.new: now    }

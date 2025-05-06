@@ -1,5 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
+use Air::Form;
 
 # header / footer
 my &index = &page.assuming(
@@ -14,14 +15,12 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'åir'],
 );
 
-use Air::Form;
-use Cro::WebApp::Form;
-
-#| form
+# form
 class Contact does Form {
-    has Str    $.first-names is validated(%va<names>)  is required;
+    has Str    $.first-names is validated(%va<names>);
     has Str    $.last-name   is validated(%va<name>)   is required;
     has Str    $.email       is validated(%va<email>)  is email;
+    has Str    $.city        is validated(%va<text>);
 
     method form-routes {
         self.init;
@@ -42,7 +41,7 @@ my $contact-form = Contact.empty;
 
 # site
 sub SITE is export {
-    site :components[$contact-form], :theme-color<blue>, :bold-color<green>,
+    site :components[$contact-form],
         index
             main
                 content [

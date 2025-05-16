@@ -24,7 +24,7 @@ Person.^create-table;
 Person.^populate;
 
 # Verify test records were created
-#warn Person.^all.map({ $_.firstName ~ ' ' ~ $_.lastName }).join(", "); $*ERR.flush;
+#note Person.^all.map({ $_.firstName ~ ' ' ~ $_.lastName }).join(", ");
 
 role HxSearchBox {
     method hx-search-box(--> Hash()) {

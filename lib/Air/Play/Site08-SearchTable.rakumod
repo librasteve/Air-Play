@@ -2,7 +2,7 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Component;
 
-use Air::Play::Site;
+use Air::Play::SearchTable;
 
 my &index = &page.assuming( #:REFRESH(1),
     title       => 'hÅrc',

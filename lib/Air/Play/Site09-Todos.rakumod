@@ -3,6 +3,7 @@ use Air::Base;
 use Air::Scumponent;
 
 use Red:api<2>;
+red-defaults “SQLite”;
 
 role HxTodo {
     method hx-create(--> Hash()) {
@@ -27,8 +28,8 @@ model Todo does Scumponent {
     also does HxTodo;
 
     has UInt   $.id   is serial;
-    has Bool() $.checked is rw is column = False;
-    has Str()  $.text is column is required;
+    has Bool   $.checked is rw is column = False;
+    has Str    $.text is column is required;
 
     method LOAD(Str() $id)  { Todo.^load: $id }
     method CREATE(*%text)   { Todo.^create: |%text }
@@ -48,22 +49,26 @@ model Todo does Scumponent {
     }
 }
 
+Todo.^create-table;
+
 my &index = &page.assuming(
     title       => 'hÅrc',
     description => 'HTMX, Air, Red, Cro',
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-my @todos = do for <one two> -> $text { Todo.new: :$text };
+my @todos = do for <one two> -> $text { Todo.^create: :$text };
 
 #note @todos.map(*.HTML);
+#note div table @todos;
+note Todo.^load: 1;
 
 sub SITE is export {
     site :components(@todos),
         index
             main [
                 h3 'Todos';
-                table [@todos];
+                table @todos;
                 form  |Todo.hx-create, [
                     input  :name<text>;
                     button :type<submit>, '+';

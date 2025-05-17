@@ -1,8 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Scumponent;
-
-use Red:api<2>;
+use Air::Component;
 
 role HxTodo {
     method hx-create(--> Hash()) {
@@ -11,32 +9,26 @@ role HxTodo {
         :hx-swap<beforeend>,
     }
     method hx-delete(--> Hash()) {
-        :hx-delete("todo"),
+        :hx-delete($.url-id),
         :hx-confirm<Are you sure?>,
         :hx-target<closest tr>,
         :hx-swap<delete>,
     }
     method hx-toggle(--> Hash()) {
-        :hx-get("todo/toggle"),
+        :hx-get("$.url-id/toggle"),
         :hx-target<closest tr>,
         :hx-swap<outerHTML>,
     }
 }
 
-model Todo does Scumponent {
+class Todo does Component {
     also does HxTodo;
 
-    has UInt   $.id   is serial;
-    has Bool() $.checked is rw is column = False;
-    has Str()  $.text is column is required;
+    has Bool $.checked is rw = False;
+    has Str  $.text;
 
-    method LOAD(Str() $id)  { Todo.^load: $id }
-    method CREATE(*%text)   { Todo.^create: |%text }
-    method DELETE           { $.^delete }
-
-    method toggle is accessible {
+    method toggle is controller {
         $!checked = !$!checked;
-        $.^save;
         respond self;
     }
 
@@ -56,14 +48,12 @@ my &index = &page.assuming(
 
 my @todos = do for <one two> -> $text { Todo.new: :$text };
 
-#note @todos.map(*.HTML);
-
 sub SITE is export {
     site :components(@todos),
         index
             main [
                 h3 'Todos';
-                table [@todos];
+                table @todos;
                 form  |Todo.hx-create, [
                     input  :name<text>;
                     button :type<submit>, '+';

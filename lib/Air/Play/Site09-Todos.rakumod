@@ -12,13 +12,13 @@ role HxTodo {
         :hx-swap<beforeend>,
     }
     method hx-delete(--> Hash()) {
-        :hx-delete("todo"),
+        :hx-delete("todo/$.id"),
         :hx-confirm<Are you sure?>,
         :hx-target<closest tr>,
         :hx-swap<delete>,
     }
     method hx-toggle(--> Hash()) {
-        :hx-get("todo/toggle"),
+        :hx-get("todo/$.id/toggle"),
         :hx-target<closest tr>,
         :hx-swap<outerHTML>,
     }
@@ -35,7 +35,7 @@ model Todo does Scumponent {
     method CREATE(*%text)   { Todo.^create: |%text }
     method DELETE           { $.^delete }
 
-    method toggle is accessible {
+    method toggle is controller {
         $!checked = !$!checked;
         $.^save;
         respond self;
@@ -59,9 +59,7 @@ my &index = &page.assuming(
 
 my @todos = do for <one two> -> $text { Todo.^create: :$text };
 
-#note @todos.map(*.HTML);
-#note div table @todos;
-note Todo.^load: 1;
+#note Todo.^load(1).HTML;
 
 sub SITE is export {
     site :components(@todos),

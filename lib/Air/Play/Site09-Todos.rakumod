@@ -27,13 +27,9 @@ role HxTodo {
 model Todo does Scumponent {
     also does HxTodo;
 
-    has UInt   $.id   is serial;
+    has UInt   $.id      is serial;
     has Bool   $.checked is rw is column = False;
-    has Str    $.text is column is required;
-
-    method LOAD(Str() $id)  { Todo.^load: $id }
-    method CREATE(*%text)   { Todo.^create: |%text }
-    method DELETE           { $.^delete }
+    has Str    $.text    is column is required;
 
     method toggle is controller {
         $!checked = !$!checked;
@@ -41,14 +37,13 @@ model Todo does Scumponent {
         respond self;
     }
 
-    multi method HTML {
+    method HTML {
         tr
             td( input :type<checkbox>, |$.hx-toggle, :$!checked ),
             td( $!checked ?? del $!text !! $!text),
             td( button :type<submit>, |$.hx-delete, :style<width:50px>, '-'),
     }
 }
-
 Todo.^create-table;
 
 my &index = &page.assuming(
@@ -57,17 +52,15 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-my @todos = do for <one two> -> $text { Todo.^create: :$text };
-
-#note Todo.^load(1).HTML;
+do for <one two> -> $text { Todo.^create: :$text };
 
 sub SITE is export {
-    site :components(@todos),
+    site :components(Todo),
         index
             main [
                 h3 'Todos';
-                table @todos;
-                form  |Todo.hx-create, [
+                table Todo.^all;
+                form |Todo.hx-create, [
                     input  :name<text>;
                     button :type<submit>, '+';
                 ];

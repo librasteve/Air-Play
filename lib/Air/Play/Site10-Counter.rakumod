@@ -1,6 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
+#use Air::Component;
+use Air::Scumponent;
 
 my &index = &page.assuming( #:REFRESH(5),
     title       => 'hÅrc',
@@ -8,27 +9,27 @@ my &index = &page.assuming( #:REFRESH(5),
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-class Counter does Component does Tag {
-    has Int $.value = 0;
+class Counter does Filament {
+    has Int $.count = 0;
 
     method increment is controller {
-        $!value++;
+        $!count++;
         respond self
     }
 
     method hx-increment(--> Hash()) {
-        :hx-get("$.url-id/increment"),
-        :hx-target("#$.id"),
+        :hx-get("counter/$.id/increment"),
+        :hx-target("#counter-$.id"),
         :hx-swap<outerHTML>,
         :hx-trigger<submit>,
     }
 
-    multi method HTML {
-        input :$.id, :$.name, :$!value
+    method HTML {
+        input :id("counter-$.id"), :name("counter"), :value($!count)
     }
 }
 
-my Counter $counter .= new;
+my $counter = Counter.new;
 
 sub SITE is export {
     site :components[$counter], #:theme-color<red>,
@@ -36,7 +37,7 @@ sub SITE is export {
             main
                 form |$counter.hx-increment, [
                     h3 'Counter:';
-                    $counter;
+                    ~$counter;
                     button :type<submit>, '+';
                 ]
 }

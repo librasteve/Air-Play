@@ -2,8 +2,7 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Scumponent;
 
-use Red:api<2>;
-red-defaults “SQLite”;
+use Red:api<2>; red-defaults “SQLite”;
 
 role HxTodo {
     method hx-create(--> Hash()) {
@@ -24,7 +23,7 @@ role HxTodo {
     }
 }
 
-model Todo does Scumponent {
+model Todo does Scumponent does CRUD {
     also does HxTodo;
 
     has UInt   $.id      is serial;
@@ -34,7 +33,7 @@ model Todo does Scumponent {
     method toggle is controller {
         $!checked = !$!checked;
         $.^save;
-        respond self;
+        respond self.HTML
     }
 
     method HTML {
@@ -52,7 +51,7 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-do for <one two> -> $text { Todo.^create: :$text };
+for <one two> -> $text { Todo.^create: :$text };
 
 sub SITE is export {
     site :components(Todo),

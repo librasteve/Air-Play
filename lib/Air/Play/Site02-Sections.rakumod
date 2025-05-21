@@ -1,6 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
+#use Air::Component;
+use Air::Scumponent;
 
 # content
 my %data =
@@ -43,5 +44,5 @@ my &index = &page.assuming( #:REFRESH(5),
 sub SITE is export {
     site :bold-color<maroon>,
         index
-            main $Content1
+            main 'yo' # $Content1
 }

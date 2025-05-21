@@ -1,7 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
 
-my &planets = &table.assuming(
+my &planets = &table.assuming( :class<striped>,
     :thead[["Planet", "Diameter (km)",
             "Distance to Sun (AU)", "Orbit (days)"],],
     :tbody[["Mercury",  "4,880", "0.39",  "88"],
@@ -19,7 +19,7 @@ my &index = &page.assuming( #:REFRESH(5),
 );
 
 sub SITE is export {
-    site #:bold-color<blue>,
+    site :bold-color<blue>,
         index
             main
                 div [

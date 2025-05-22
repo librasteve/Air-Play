@@ -44,5 +44,5 @@ my &index = &page.assuming( #:REFRESH(5),
 sub SITE is export {
     site :bold-color<maroon>,
         index
-            main 'yo' # $Content1
+            main $Content1
 }

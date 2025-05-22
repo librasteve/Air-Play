@@ -1,6 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
+#use Air::Component;
+use Air::Scumponent;
 
 class MyPage is Page {
     has $.title       = 'hÅrc';
@@ -36,11 +37,12 @@ my $page2 = MyPage.new: Main.new:
         table |%data;
     ];
 
-
 my $nav = Nav.new:
     logo => safe( '<a href="/">h<b>&Aring;</b>rc</a>' ),
     items => [Page1 => $page1, Page2 => $page2];
 
 $page1.nav = $page2.nav = $nav;
 
-sub SITE is export {Site.new: pages => [$page1, $page2]}
+sub SITE is export {
+    Site.new: pages => [$page1, $page2]
+}

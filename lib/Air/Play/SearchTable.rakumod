@@ -1,5 +1,6 @@
 use Air::Functional;
-use Air::Component;
+#use Air::Component;
+use Air::Scumponent;
 
 my @components = <SearchTable>;
 
@@ -28,7 +29,7 @@ Person.^populate;
 
 role HxSearchBox {
     method hx-search-box(--> Hash()) {
-        :hx-put("{self.url}/{self.serial}/search"),
+        :hx-put("{self.url}/{self.id}/search"),
         :hx-trigger<keyup changed delay:500ms, search>,
         :hx-target<#search-results>,
         :hx-swap<outerHTML>,
@@ -38,7 +39,7 @@ role HxSearchBox {
 
 class SearchBox   does HxSearchBox {
     has $.url;
-    has $.serial;
+    has $.id;
     has $.title;
 
     multi method HTML {
@@ -55,7 +56,7 @@ class SearchBox   does HxSearchBox {
     }
 }
 
-class Results     does Component {
+class Results     does Filament {
     has @.data is rw = [];
 
     multi method HTML {
@@ -67,11 +68,11 @@ class Results     does Component {
     }
 }
 
-class SearchTable does Component {
+class SearchTable does Filament {
     has Str  $.title = 'Search';
     has      $.thead = <First Last Email>;
 
-    has SearchBox $.searchbox .= new: :url(self.url), :serial(self.serial), :$!title;
+    has SearchBox $.searchbox .= new: :url(self.url), :id(self.id), :$!title;
     has Results   $.results   .= new;
 
     method thead {
@@ -89,7 +90,7 @@ class SearchTable does Component {
             $_.email.&check
         };
 
-        respond $!results;
+        respond $!results.HTML;
     }
 
     multi method HTML {

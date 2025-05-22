@@ -1,6 +1,7 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
+#use Air::Component;
+use Air::Scumponent;
 
 use Air::Play::SearchTable;
 
@@ -16,6 +17,6 @@ sub SITE is export {
         index
             main
                 div [
-                    searchtable :serial(0)
+                    searchtable :id(0)
                 ]
 }

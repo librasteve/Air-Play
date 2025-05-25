@@ -1,6 +1,8 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
+use Air::Scumponent;
+
+use Red:api<2>; red-defaults “SQLite”;
 
 role HxTodo {
     method hx-create(--> Hash()) {
@@ -9,36 +11,39 @@ role HxTodo {
         :hx-swap<beforeend>,
     }
     method hx-delete(--> Hash()) {
-        :hx-delete($.url-id),
+        :hx-delete("todo/$.id"),
         :hx-confirm<Are you sure?>,
         :hx-target<closest tr>,
         :hx-swap<delete>,
     }
     method hx-toggle(--> Hash()) {
-        :hx-get("$.url-id/toggle"),
+        :hx-get("todo/$.id/toggle"),
         :hx-target<closest tr>,
         :hx-swap<outerHTML>,
     }
 }
 
-class Todo does Component {
+model Todo does Scumponent does CRUD {
     also does HxTodo;
 
-    has Bool $.checked is rw = False;
-    has Str  $.text;
+    has UInt   $.id      is serial;
+    has Bool   $.checked is rw is column = False;
+    has Str    $.text    is column is required;
 
     method toggle is controller {
         $!checked = !$!checked;
-        respond self;
+        $.^save;
+        respond self.HTML
     }
 
-    multi method HTML {
+    method HTML {
         tr
             td( input :type<checkbox>, |$.hx-toggle, :$!checked ),
             td( $!checked ?? del $!text !! $!text),
             td( button :type<submit>, |$.hx-delete, :style<width:50px>, '-'),
     }
 }
+Todo.^create-table;
 
 my &index = &page.assuming(
     title       => 'hÅrc',
@@ -46,15 +51,15 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-my @todos = do for <one two> -> $text { Todo.new: :$text };
+for <one two> -> $text { Todo.^create: :$text };
 
 sub SITE is export {
-    site :components(@todos),
+    site :components(Todo),
         index
             main [
                 h3 'Todos';
-                table @todos;
-                form  |Todo.hx-create, [
+                table Todo.^all;
+                form |Todo.hx-create, [
                     input  :name<text>;
                     button :type<submit>, '+';
                 ];

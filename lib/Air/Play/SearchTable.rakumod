@@ -81,13 +81,14 @@ class SearchTable does Filament {
         }
     }
 
-    method search(:$needle) is controller {
+    method search(:$needle) is controller{:http-method('PUT')} {
+
         sub check($_) { .fc.contains($needle.fc) }
 
         $!results.data = Person.^all.grep: {
             $_.firstName.&check ||
-            $_.lastName.&check  ||
-            $_.email.&check
+                $_.lastName.&check  ||
+                $_.email.&check
         };
 
         respond $!results.HTML;

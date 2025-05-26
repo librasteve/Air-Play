@@ -21,8 +21,8 @@ role HxTodo {
     }
 }
 
-class Todo does Filament[:C:R:U:D] {
-#class Todo does Filament[:ADD, :LOAD, :DELETE] {
+class Todo does Component[:C:R:U:D] {
+#class Todo does Component[:ADD, :LOAD, :DELETE] {
     also does HxTodo;
 
     has Bool $.checked is rw = False;

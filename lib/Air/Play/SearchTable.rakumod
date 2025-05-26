@@ -55,7 +55,7 @@ class SearchBox   does HxSearchBox {
     }
 }
 
-class Results     does Filament {
+class Results     does Component {
     has @.data is rw = [];
 
     multi method HTML {
@@ -67,7 +67,7 @@ class Results     does Filament {
     }
 }
 
-class SearchTable does Filament {
+class SearchTable does Component {
     has Str  $.title = 'Search';
     has      $.thead = <First Last Email>;
 

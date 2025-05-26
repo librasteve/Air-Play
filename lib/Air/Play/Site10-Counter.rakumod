@@ -8,7 +8,7 @@ my &index = &page.assuming( #:REFRESH(5),
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-class Counter does Filament {
+class Counter does Component {
     has Int $.count = 0;
 
     method increment is controller {

@@ -1,11 +1,10 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
 use Air::Form;
 
 use Red:api<2>;
 
-model Contact does Form does Component {
+model Contact does Form {
     has Int      $.id         is serial is hidden;
     has Str      $.first-name is column is validated(%va<name>);
     has Str      $.last-name  is column is validated(%va<name>)  is required;
@@ -15,7 +14,7 @@ model Contact does Form does Component {
     method form-routes {
         self.init;
 
-        self.controller: -> Contact $form {
+        self.submit: -> Contact $form {
             if $form.is-valid {
                 note "Got form data: $form.form-data()";
                 self.finish: 'Contact info received!'
@@ -40,8 +39,6 @@ Contact.^populate;
 #note Contact.^all.map({ $_.first-name ~ ' ' ~ $_.last-name }).join(", ");
 
 my $contact-form = Contact.empty;
-
-
 
 my &index = &page.assuming(
     title       => 'hÅrc',

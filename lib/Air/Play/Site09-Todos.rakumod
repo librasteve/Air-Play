@@ -1,7 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-#use Air::Component;
-use Air::Scumponent;
+use Air::Component;
 
 role HxTodo {
     method hx-add(--> Hash()) {

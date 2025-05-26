@@ -1,6 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Scumponent;
+use Air::Component;
 
 use Red:api<2>; red-defaults “SQLite”;
 
@@ -23,7 +23,7 @@ role HxTodo {
     }
 }
 
-model Todo does Scumponent does CRUD {
+model Todo does Component::Red[:C:R:U:D] {
     also does HxTodo;
 
     has UInt   $.id      is serial;

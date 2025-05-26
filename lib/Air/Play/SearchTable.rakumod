@@ -1,6 +1,5 @@
 use Air::Functional;
-#use Air::Component;
-use Air::Scumponent;
+use Air::Component;
 
 my @components = <SearchTable>;
 

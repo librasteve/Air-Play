@@ -1,7 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-#use Air::Component;
-use Air::Scumponent;
+use Air::Component;
 
 # content
 my %data =
@@ -37,7 +36,7 @@ my &index = &page.assuming( #:REFRESH(5),
         widgets => [lightdark],
     ),
 
-    footer      => footer p ['Aloft on ', b 'åir'],
+    footer => footer p ['Aloft on ', b 'åir'],
 );
 
 # site

@@ -1,7 +1,6 @@
 use Air::Functional :BASE;
 use Air::Base;
-#use Air::Component;
-use Air::Scumponent;
+use Air::Component;
 
 use Red:api<2>; red-defaults “SQLite”;
 
@@ -11,7 +10,7 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-model Counter does Scumponent {
+model Counter does Component::Red {
     has UInt  $.id     is serial;
     has Int   $.count  is rw is column(:default{0});
 

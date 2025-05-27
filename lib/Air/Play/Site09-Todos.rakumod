@@ -22,7 +22,6 @@ role HxTodo {
 }
 
 class Todo does Component[:C:R:U:D] {
-#class Todo does Component[:ADD, :LOAD, :DELETE] {
     also does HxTodo;
 
     has Bool $.checked is rw = False;
@@ -30,7 +29,7 @@ class Todo does Component[:C:R:U:D] {
 
     method toggle is controller {
         $!checked = !$!checked;
-        respond self;
+        self
     }
 
     multi method HTML {

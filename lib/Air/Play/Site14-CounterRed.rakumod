@@ -17,7 +17,7 @@ model Counter does Component::Red {
     method increment is controller {
         $!count++;
         $.^save;
-        respond $.HTML
+        self
     }
 
     method hx-increment(--> Hash()) {

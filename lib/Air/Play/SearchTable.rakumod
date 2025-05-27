@@ -36,7 +36,7 @@ role HxSearchBox {
     }
 }
 
-class SearchBox   does HxSearchBox {
+class SearchBox does HxSearchBox {
     has $.url;
     has $.id;
     has $.title;
@@ -55,7 +55,7 @@ class SearchBox   does HxSearchBox {
     }
 }
 
-class Results     does Component {
+class Results does Component {
     has @.data is rw = [];
 
     multi method HTML {
@@ -90,7 +90,7 @@ class SearchTable does Component {
                 $_.email.&check
         };
 
-        respond $!results.HTML;
+        $!results;
     }
 
     multi method HTML {

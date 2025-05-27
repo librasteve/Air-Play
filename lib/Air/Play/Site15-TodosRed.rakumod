@@ -33,7 +33,7 @@ model Todo does Component::Red[:C:R:U:D] {
     method toggle is controller {
         $!checked = !$!checked;
         $.^save;
-        respond self.HTML
+        self
     }
 
     method HTML {

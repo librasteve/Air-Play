@@ -13,7 +13,7 @@ class Counter does Component {
 
     method increment is controller {
         $!count++;
-        respond self
+        self
     }
 
     method hx-increment(--> Hash()) {

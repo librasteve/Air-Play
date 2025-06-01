@@ -36,7 +36,7 @@ my &index = &page.assuming( #:REFRESH(5),
         widgets => [lightdark],
     ),
 
-    footer      => footer p ['Aloft on ', b 'åir'],
+    footer => footer p ['Aloft on ', b 'åir'],
 );
 
 # site

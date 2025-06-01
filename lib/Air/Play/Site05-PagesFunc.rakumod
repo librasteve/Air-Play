@@ -1,7 +1,5 @@
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Component;
-
 
 ### PAGE TEMPLATE ###
 

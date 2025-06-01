@@ -28,7 +28,7 @@ Person.^populate;
 
 role HxSearchBox {
     method hx-search-box(--> Hash()) {
-        :hx-put("{self.url}/{self.serial}/search"),
+        :hx-put("{self.url}/{self.id}/search"),
         :hx-trigger<keyup changed delay:500ms, search>,
         :hx-target<#search-results>,
         :hx-swap<outerHTML>,
@@ -36,9 +36,9 @@ role HxSearchBox {
     }
 }
 
-class SearchBox   does HxSearchBox {
+class SearchBox does HxSearchBox {
     has $.url;
-    has $.serial;
+    has $.id;
     has $.title;
 
     multi method HTML {
@@ -55,7 +55,7 @@ class SearchBox   does HxSearchBox {
     }
 }
 
-class Results     does Component {
+class Results does Component {
     has @.data is rw = [];
 
     multi method HTML {
@@ -71,7 +71,7 @@ class SearchTable does Component {
     has Str  $.title = 'Search';
     has      $.thead = <First Last Email>;
 
-    has SearchBox $.searchbox .= new: :url(self.url), :serial(self.serial), :$!title;
+    has SearchBox $.searchbox .= new: :url(self.url), :id(self.id), :$!title;
     has Results   $.results   .= new;
 
     method thead {
@@ -80,16 +80,17 @@ class SearchTable does Component {
         }
     }
 
-    method search(:$needle) is controller {
+    method search(:$needle) is controller{:http-method('PUT')} {
+
         sub check($_) { .fc.contains($needle.fc) }
 
         $!results.data = Person.^all.grep: {
             $_.firstName.&check ||
-            $_.lastName.&check  ||
-            $_.email.&check
+                $_.lastName.&check  ||
+                $_.email.&check
         };
 
-        respond $!results;
+        $!results;
     }
 
     multi method HTML {

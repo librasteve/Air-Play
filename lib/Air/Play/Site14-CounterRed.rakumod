@@ -2,17 +2,21 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Component;
 
-my &index = &page.assuming( #:REFRESH(5),
+use Red:api<2>; red-defaults “SQLite”;
+
+my &index = &page.assuming(
     title       => 'hÅrc',
     description => 'HTMX, Air, Red, Cro',
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-class Counter does Component {
-    has Int $.count = 0;
+model Counter does Component::Red {
+    has UInt  $.id     is serial;
+    has Int   $.count  is rw is column(:default{0});
 
     method increment is controller {
         $!count++;
+        $.^save;
         self
     }
 
@@ -27,8 +31,9 @@ class Counter does Component {
         input :id("counter-$.id"), :name("counter"), :value($!count)
     }
 }
+Counter.^create-table;
 
-my $counter = Counter.new;
+my $counter = Counter.^create;
 
 sub SITE is export {
     site :components[$counter], #:theme-color<red>,

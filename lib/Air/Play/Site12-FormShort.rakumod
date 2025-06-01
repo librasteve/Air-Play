@@ -11,7 +11,7 @@ class Contact does Form {
     method form-routes {
         self.init;
 
-        self.controller: -> Contact $form {
+        self.submit: -> Contact $form {
             if $form.is-valid {
                 note "Got form data: $form.form-data()";
                 self.finish: 'Contact info received!'

@@ -16,6 +16,6 @@ sub SITE is export {
         index
             main
                 div [
-                    searchtable :serial(0)
+                    searchtable :id(0)
                 ]
 }

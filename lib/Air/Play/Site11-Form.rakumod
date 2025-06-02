@@ -2,12 +2,6 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Form;
 
-my &index = &page.assuming( #:REFRESH(5),
-    title       => 'hÅrc',
-    description => 'HTMX, Air, Red, Cro',
-    footer      => footer p ['Aloft on ', b 'Åir'],
-);
-
 class Contact does Form {
     has Str    $.name     is validated(%va<text>)  is required;
     has Str    $.street   is validated(%va<text>);
@@ -63,6 +57,15 @@ class Contact does Form {
 }
 
 my $contact = Contact.empty;
+
+class Index is Page {
+    has Str $.title       = 'hÅrc';
+    has Str $.description = 'HTMX, Air, Red, Cro';
+
+    has Footer $.footer   = footer p ['Aloft on ', b 'åir'];
+    has Script @.enqueue  = [Script.new($contact.SCRIPT)];
+}
+sub index(*@a, *%h) { Index.new( |@a, |%h ) };
 
 sub SITE is export {
     site :components[$contact], #:theme-color<red>,

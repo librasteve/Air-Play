@@ -26,25 +26,27 @@ class Contact does Form {
 my $contact-form = Contact.empty;
 
 # site
-
 use Air::Functional :BASE;
 use Air::Base;
 
-my &index = &page.assuming(
-    title       => 'hÅrc',
-    description => 'HTMX, Air, Red, Cro',
+class MyPage is Page {
+    has Str $.title       = 'hÅrc';
+    has Str $.description = 'HTMX, Air, Red, Cro';
 
-    nav => nav(
+    has Nav $nav = nav(
         logo    => safe('<a href="/">h<b>&Aring;</b>rc</a>'),
         widgets => [lightdark],
-    ),
+    );
 
-    footer      => footer p ['Aloft on ', b 'åir'],
-);
+    has Footer $.footer   = footer p ['Aloft on ', b 'åir'];
+
+    has Script @.enqueue  = [Script.new($contact-form.SCRIPT)];
+}
+sub mypage(*@a, *%h) { MyPage.new( |@a, |%h ) };
 
 sub SITE is export {
     site :components[$contact-form],
-        index
+        mypage
             main
                 content [
                     h2 'Contact Form';

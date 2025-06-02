@@ -12,7 +12,7 @@ my &index = &page.assuming( #:REFRESH(1),
 
 
 sub SITE is export {
-    site :components[SearchTable.new],
+    site :register[SearchTable.new],
         index
             main
                 div [

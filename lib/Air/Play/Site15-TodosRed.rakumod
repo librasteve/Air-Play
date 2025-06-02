@@ -54,7 +54,7 @@ my &index = &page.assuming(
 for <one two> -> $text { Todo.^create: :$text };
 
 sub SITE is export {
-    site :components(Todo),
+    site :register(Todo),
         index
             main [
                 h3 'Todos';

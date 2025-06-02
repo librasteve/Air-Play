@@ -31,7 +31,7 @@ class Counter does Component {
 my $counter = Counter.new;
 
 sub SITE is export {
-    site :components[$counter], #:theme-color<red>,
+    site :register[$counter], #:theme-color<red>,
         index
             main
                 form |$counter.hx-increment, [

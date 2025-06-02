@@ -63,12 +63,11 @@ class Index is Page {
     has Str $.description = 'HTMX, Air, Red, Cro';
 
     has Footer $.footer   = footer p ['Aloft on ', b 'åir'];
-    has Script @.enqueue  = [Script.new($contact.SCRIPT)];
 }
 sub index(*@a, *%h) { Index.new( |@a, |%h ) };
 
 sub SITE is export {
-    site :components[$contact], #:theme-color<red>,
+    site :register[$contact], #:theme-color<red>,
         index
             main [
                 h2 'Contact Form';

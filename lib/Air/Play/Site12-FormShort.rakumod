@@ -29,24 +29,22 @@ my $contact-form = Contact.empty;
 use Air::Functional :BASE;
 use Air::Base;
 
-class MyPage is Page {
+class Index is Page {
     has Str $.title       = 'hÅrc';
     has Str $.description = 'HTMX, Air, Red, Cro';
 
-    has Nav $nav = nav(
+    has Nav $.nav = nav(
         logo    => safe('<a href="/">h<b>&Aring;</b>rc</a>'),
         widgets => [lightdark],
     );
 
     has Footer $.footer   = footer p ['Aloft on ', b 'åir'];
-
-    has Script @.enqueue  = [Script.new($contact-form.SCRIPT)];
 }
-sub mypage(*@a, *%h) { MyPage.new( |@a, |%h ) };
+sub index(*@a, *%h) { Index.new( |@a, |%h ) };
 
 sub SITE is export {
-    site :components[$contact-form],
-        mypage
+    site :register[$contact-form],
+        index
             main
                 content [
                     h2 'Contact Form';

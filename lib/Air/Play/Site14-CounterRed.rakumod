@@ -36,7 +36,7 @@ Counter.^create-table;
 my $counter = Counter.^create;
 
 sub SITE is export {
-    site :components[$counter], #:theme-color<red>,
+    site :register[$counter], #:theme-color<red>,
         index
             main
                 form |$counter.hx-increment, [

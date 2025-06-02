@@ -40,20 +40,21 @@ Contact.^populate;
 
 my $contact-form = Contact.empty;
 
-my &index = &page.assuming(
-    title       => 'hÅrc',
-    description => 'HTMX, Air, Red, Cro',
+class Index is Page {
+    has Str $.title       = 'hÅrc';
+    has Str $.description = 'HTMX, Air, Red, Cro';
 
-    nav => nav(
+    has Nav $.nav = nav(
         logo    => safe('<a href="/">h<b>&Aring;</b>rc</a>'),
         widgets => [lightdark],
-    ),
+    );
 
-    footer      => footer p ['Aloft on ', b 'åir'],
-);
+    has Footer $.footer   = footer p ['Aloft on ', b 'åir'];
+}
+sub index(*@a, *%h) { Index.new( |@a, |%h ) };
 
 sub SITE is export {
-    site :components[$contact-form],
+    site :register[$contact-form],
         index
             main
                 content [

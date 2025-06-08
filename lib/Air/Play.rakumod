@@ -4,7 +4,7 @@ unit class Air::Play;
 #use Air::Play::Site01-Minimal;
 #use Air::Play::Site02-Sections;
 #use Air::Play::Site03-Pages;
-#use Air::Play::Site04-HarcStack;
+use Air::Play::Site04-HarcStack;
 #use Air::Play::Site05-PagesFunc;
 #use Air::Play::Site06-Semantic;
 #use Air::Play::Site07-BaseExamples;
@@ -13,7 +13,7 @@ unit class Air::Play;
 #use Air::Play::Site10-Counter;
 #use Air::Play::Site11-Form;
 #use Air::Play::Site12-FormShort;
-use Air::Play::Site13-FormRed;
+#use Air::Play::Site13-FormRed;
 #use Air::Play::Site14-CounterRed;
 #use Air::Play::Site15-TodosRed;
 

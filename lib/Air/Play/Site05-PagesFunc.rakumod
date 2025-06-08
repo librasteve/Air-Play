@@ -49,7 +49,7 @@ my Page $Page2 =
 
 my Nav $nav =
     nav
-        logo => safe( '<a href="/">h<b>&Aring;</b>rc</a>' ),
+        logo => span safe( '<a href="/">h<b>&Aring;</b>rc</a>' ),
         items => [:$Page1, :$Page2],
         widgets => [lightdark];
 

@@ -14,7 +14,7 @@ my &index = &page.assuming( #:REFRESH(5),
     description => 'HTMX, Air, Red, Cro',
 
     nav => nav(
-        logo    => span safe('<a href="/">h<b>&Aring;</b>rc</a>'),
+        logo    => span( safe '<a href="/">h<b>&Aring;</b>rc</a>' ),
         items   => [:$htmx,:$air,:$red,:$cro,:$raku,:$talk],
         widgets => [lightdark],
     ),
@@ -39,14 +39,14 @@ site :theme-color<azure>, :bold-color<maroon>, :@tools,
   main [
       div [
           h2 'The hArc Stack';
-          p  'Combining HTMX with raku Air, Red and Cro so that you can ',
-              em 'just build websites the right way™', '.';
+#          p  'Combining HTMX with raku Air, Red and Cro so that you can ',
+#              em 'just build websites the right way™', '.';
           figure [
               img :src</img/Site10-Counter.png>, :alt<"hArc stack example code">,
                   :style<width: 100%; max-width: 1024px; height: auto;>;
               figcaption 'hArc example code shown in IntelliJ IDE with raku plugin 2.0.';
           ];
-          p safe 'hArc stands for "HTMX, Air, Red, Cro" - the <a href="https://raku.land/zef:librasteve/Air">Air raku module </a> is the "glue" that makes the stack. There\'s also the <a href="https://raku.land/zef:librasteve/Air::Play">Air::Play module</a> for website examples and Getting Started instructions.';
+#          p safe 'hArc stands for "HTMX, Air, Red, Cro" - the <a href="https://raku.land/zef:librasteve/Air">Air raku module </a> is the "glue" that makes the stack. There\'s also the <a href="https://raku.land/zef:librasteve/Air::Play">Air::Play module</a> for website examples and Getting Started instructions.';
           hr;
 
           h2 'HTMX: Server Side';

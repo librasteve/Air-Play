@@ -45,7 +45,7 @@ class Index is Page {
     has Str $.description = 'HTMX, Air, Red, Cro';
 
     has Nav $.nav = nav(
-        logo    => safe('<a href="/">h<b>&Aring;</b>rc</a>'),
+        logo    => span( safe '<a href="/">h<b>&Aring;</b>rc</a>' ),
         widgets => [lightdark],
     );
 

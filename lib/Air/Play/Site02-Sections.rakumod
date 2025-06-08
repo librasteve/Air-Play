@@ -31,7 +31,7 @@ my &index = &page.assuming( #:REFRESH(5),
     description => 'HTMX, Air, Red, Cro',
 
     nav => nav(
-        logo    => safe('<a href="/">h<b>&Aring;</b>rc</a>'),
+        logo    => span( safe '<a href="/">h<b>&Aring;</b>rc</a>' ),
         items   => [:$Content1, :$Content2, :$Google],
         widgets => [lightdark],
     ),

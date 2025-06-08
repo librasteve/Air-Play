@@ -37,7 +37,7 @@ my $page2 = MyPage.new: Main.new:
     ];
 
 my $nav = Nav.new:
-    logo => safe( '<a href="/">h<b>&Aring;</b>rc</a>' ),
+    logo => span safe( '<a href="/">h<b>&Aring;</b>rc</a>' ),
     items => [Page1 => $page1, Page2 => $page2];
 
 $page1.nav = $page2.nav = $nav;

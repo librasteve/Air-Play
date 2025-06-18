@@ -2801,7 +2801,7 @@ article > footer {
 }
 
 b {
-  color: maroon;
+  color: red;
 }
 
 .logo, .logo:hover {
@@ -2814,6 +2814,36 @@ b {
 body > footer > p {
   font-size: 66%;
   font-style: italic;
+}
+
+:root {
+  --base-color-scalar: #3b82f6; /* Constant - soft blue */
+  --base-color-array: #3b82f6; /* Array - same as scalar */
+  --base-color-hash: #3b82f6; /* Hash - same as scalar */
+  --base-color-code: #1e1e1e; /* Generic code text */
+  --base-color-keyword: #0d9488; /* Statement - teal */
+  --base-color-operator: #0d9488; /* Matches keyword */
+  --base-color-type: #22c55e; /* Type - green */
+  --base-color-routine: #b45309; /* Identifier - orange-brown */
+  --base-color-string: #3b82f6; /* Reuses scalar */
+  --base-color-string-delimiter: #3b82f6; /* Reuses scalar */
+  --base-color-escape: #6b7280; /* Escape / neutral gray */
+  --base-color-text: #1e1e1e; /* Main text */
+  --base-color-comment: #6b7280; /* Comment - soft gray */
+  --base-color-regex-special: #0d9488; /* Regex special - teal */
+  --base-color-regex-literal: #475569; /* Regex content - slate */
+  --base-color-regex-delimiter: #d946ef; /* Regex delimiters - magenta */
+  --base-color-doc-text: #10b981; /* Doc text - emerald */
+  --base-color-doc-markup: #d946ef; /* Doc markup - magenta */
+}
+
+.nohighlights {
+  background: none;
+  color: inherit;
+}
+
+article {
+  direction: ltr;
 }
 
 /*# sourceMappingURL=styles.css.map */

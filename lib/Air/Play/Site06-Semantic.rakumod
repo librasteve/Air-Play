@@ -3,8 +3,9 @@ use Air::Base;
 use Air::Component;
 
 sub SITE is export {
-  site
-    page :styled-aside-on, [
+  site :register[Aside],
+    page # :styled-aside-on,
+    [
       header [
         h1 'Welcome to My Blog';
         nav :widgets(lightdark),

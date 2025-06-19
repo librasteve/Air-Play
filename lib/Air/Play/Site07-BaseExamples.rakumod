@@ -2,7 +2,6 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Component;
 
-
 my &index = &page.assuming(
     title       => 'hÅrc',
     description => 'HTMX, Air, Red, Cro',
@@ -16,8 +15,9 @@ sub SITE is export {
                 div [
                     h3 'Tabs';
                     tabs [
-                        Tab1 => tab section figure blockquote "tada";
-                        Tab2 => tab section figure blockquote "yoda";
+                        Tab1 => tab p "tada";
+                        Tab2 => tab p "yoda";
+                        Tab3 => tab p "coda";
                     ];
                     hr;
 
@@ -41,6 +41,7 @@ sub SITE is export {
 
                     h3 'Flexbox';
                     flexbox [span $_ for 1..34];
+                    hr;
                 ]
 }
 

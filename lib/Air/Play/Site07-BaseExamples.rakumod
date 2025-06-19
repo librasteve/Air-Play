@@ -9,20 +9,18 @@ my &index = &page.assuming(
     footer      => footer p ['Aloft on ', b 'Åir'],
 );
 
-
-#my $Tab1 = tab [
-#    h3 'Tab 1';
-#];
-#
-#my $Tab2 = tab [
-#    h3 'Tab 2';
-#];
-
 sub SITE is export {
-    site #:theme-color<blue>,
+    site :register[Tabs.new], #:theme-color<blue>,
         index #:REFRESH(5),
             main
                 div [
+                    h3 'Tabs';
+                    tabs [
+                        Tab1 => tab section figure blockquote "tada";
+                        Tab2 => tab section figure blockquote "yoda";
+                    ];
+                    hr;
+
                     h3 'Table';
                     table [[1,2],[3,4]], :thead[<Left Right>,];
 
@@ -43,10 +41,6 @@ sub SITE is export {
 
                     h3 'Flexbox';
                     flexbox [span $_ for 1..34];
-
-                    h3 'Tabs';
-#                    tabs [:$Tab1, :$Tab2];
-                    hr;
                 ]
 }
 

@@ -15,7 +15,7 @@ Install raku - eg. from [rakubrew](https://rakubrew.org), then:
 ### Install Air, Cro & Red
 - `zef install --/test cro`
 - `zef install Red --exclude="pq:ver<5>"`
-- `zef install https://github.com/librasteve/Air.git"
+- `zef install https://github.com/librasteve/Air.git`
 
 ### Install this repo
 - `git clone https://github.com/librasteve/Air-Play.git`

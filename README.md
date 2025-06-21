@@ -22,7 +22,6 @@ Install raku - eg. from [rakubrew](https://rakubrew.org), then:
 - `cd Air-Play` && `zef install .`
 
 ### Run and view it
-- `export WEBSITE_HOST="0.0.0.0" && export WEBSITE_PORT="3000"`
 - `raku -Ilib service.raku`
 - Open a browser and go to `http://localhost:3000`
 

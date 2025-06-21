@@ -51,6 +51,11 @@ install sass (in the static/css dir)
 - some tweaks to root styles (mainly to reduce scale) from [here](https://github.com/picocss/pico/discussions/482)
 
 ## Deployment
+- Install sass (dart) [adjust version as needed]
+- `curl -L -o dart-sass.tar.gz https://github.com/sass/dart-sass/releases/download/1.77.5/dart-sass-1.77.5-linux-x64.tar.gz`
+- `tar -xzf dart-sass.tar.gz`
+- `sudo mv dart-sass /opt/dart-sass`
+- `sudo ln -s /opt/dart-sass/sass /usr/local/bin/sass`
 - Install Air, Cro & Red (see above)
 - `git clone https://github.com/librasteve/Air-Play.git && cd Air-Play`
 - `zef install . --force-install --/test`
